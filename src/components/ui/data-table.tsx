@@ -58,7 +58,7 @@ interface DataTableProps<TData extends { id: string }, TValue> {
 
 export function DataTable<
   TData extends { id: string; [key: string]: any },
-  TValue
+  TValue,
 >({
   columns,
   data,

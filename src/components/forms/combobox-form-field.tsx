@@ -1,11 +1,16 @@
-import { ChevronsUpDown } from 'lucide-react';
-import React from 'react';
-import { FieldPath, FieldPathValue, FieldValues, useFormContext } from 'react-hook-form';
+import { ChevronsUpDown } from 'lucide-react'
+import React from 'react'
+import {
+  FieldPath,
+  FieldPathValue,
+  FieldValues,
+  useFormContext,
+} from 'react-hook-form'
 
-import { Combobox } from '@/components/forms/combobox';
-import OptionalLabel from '@/components/forms/optional-label';
-import { ResponsiveSelector } from '@/components/layout/responsive-selector';
-import { Button } from '@/components/ui/button';
+import { Combobox } from '@/components/forms/combobox'
+import OptionalLabel from '@/components/forms/optional-label'
+import { ResponsiveSelector } from '@/components/layout/responsive-selector'
+import { Button } from '@/components/ui/button'
 import {
   FormControl,
   FormDescription,
@@ -13,28 +18,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { cn } from '@/lib/utils'
 
 export interface ComboboxFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<TFieldValues, TName>,
+  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<
+    TFieldValues,
+    TName
+  >,
 > {
-  name: TName;
-  label?: string;
-  description?: string;
-  required?: boolean;
-  disabled?: boolean;
-  placeholder?: string;
-  items: { id: string; label: string; value: TValue }[];
-  onChangeFieldValue?: (value: TValue) => void;
+  name: TName
+  label?: string
+  description?: string
+  required?: boolean
+  disabled?: boolean
+  placeholder?: string
+  items: { id: string; label: string; value: TValue }[]
+  onChangeFieldValue?: (value: TValue) => void
 }
 
 export function ComboboxFormField<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<TFieldValues, TName>,
+  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<
+    TFieldValues,
+    TName
+  >,
 >({
   name,
   label,
@@ -45,7 +56,7 @@ export function ComboboxFormField<
   items,
   onChangeFieldValue,
 }: ComboboxFormFieldProps<TFieldValues, TName, TValue>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -68,7 +79,7 @@ export function ComboboxFormField<
                     role="combobox"
                     className={cn(
                       'w-full justify-between',
-                      !field.value && 'text-muted-foreground',
+                      !field.value && 'text-muted-foreground'
                     )}
                   >
                     {placeholder}
@@ -86,8 +97,8 @@ export function ComboboxFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

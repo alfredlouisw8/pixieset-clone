@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 export type SingleFileFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -20,12 +20,12 @@ export type SingleFileFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'multiple' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function SingleFileFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -43,7 +43,7 @@ export function SingleFileFormField<
   className,
   ...props
 }: SingleFileFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -63,20 +63,20 @@ export function SingleFileFormField<
                 disabled={formState.isSubmitting || disabled}
                 {...props}
                 onChange={(event) => {
-                  field.onChange(event.target.files?.[0]);
-                  onChangeFieldValue?.(event);
+                  field.onChange(event.target.files?.[0])
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
               />
             </FormControl>
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

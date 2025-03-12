@@ -1,5 +1,5 @@
-import { Command as CommandPrimitive } from 'cmdk';
-import { CheckIcon, Search } from 'lucide-react';
+import { Command as CommandPrimitive } from 'cmdk'
+import { CheckIcon, Search } from 'lucide-react'
 import React, {
   ComponentProps,
   ComponentPropsWithoutRef,
@@ -8,45 +8,50 @@ import React, {
   type KeyboardEvent,
   useCallback,
   useState,
-} from 'react';
+} from 'react'
 
-import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
-import { cn } from '@/lib/utils';
+import {
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command'
+import { cn } from '@/lib/utils'
 
 export interface AutocompleteItem<TValue> {
-  id: string;
-  label: string;
-  additional?: string;
-  value: TValue;
+  id: string
+  label: string
+  additional?: string
+  value: TValue
 }
 
 export type GetSelectedItemCallback<TValue> = (
   item: AutocompleteItem<TValue>,
   value: string,
-  index: number,
-) => boolean;
+  index: number
+) => boolean
 
 export type GetItemPropsCallback<TValue> = (
   item: AutocompleteItem<TValue>,
   value: string,
-  index: number,
-) => ComponentProps<typeof CommandItem> | null;
+  index: number
+) => ComponentProps<typeof CommandItem> | null
 
 export type AutocompleteProps<TValue extends any> = Omit<
   ComponentPropsWithoutRef<typeof CommandPrimitive.Input>,
   'onSelect'
 > & {
-  value?: string;
-  disabled?: boolean;
-  required?: boolean;
-  placeholder?: string;
-  emptyMessage?: string;
-  items: AutocompleteItem<TValue>[];
-  getSelectedItem?: GetSelectedItemCallback<TValue>;
-  getItemProps?: GetItemPropsCallback<TValue>;
-  onChange?: (value: string) => void;
-  onSelect?: (value: AutocompleteItem<TValue> | null) => void;
-};
+  value?: string
+  disabled?: boolean
+  required?: boolean
+  placeholder?: string
+  emptyMessage?: string
+  items: AutocompleteItem<TValue>[]
+  getSelectedItem?: GetSelectedItemCallback<TValue>
+  getItemProps?: GetItemPropsCallback<TValue>
+  onChange?: (value: string) => void
+  onSelect?: (value: AutocompleteItem<TValue> | null) => void
+}
 
 function AutocompleteInner<TValue extends any>(
   {
@@ -62,49 +67,52 @@ function AutocompleteInner<TValue extends any>(
     className,
     ...props
   }: AutocompleteProps<TValue>,
-  ref: ForwardedRef<HTMLInputElement>,
+  ref: ForwardedRef<HTMLInputElement>
 ) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>, value?: string) => {
       // Keep the options displayed when the user is typing
       if (!isOpen) {
-        setIsOpen(true);
+        setIsOpen(true)
       }
 
       // This is not a default behaviour of the <input /> field
       if (event.key === 'Enter' && value) {
-        const optionToSelect = items.find((item) => item.label === value) ?? null;
-        onSelect?.(optionToSelect);
+        const optionToSelect =
+          items.find((item) => item.label === value) ?? null
+        onSelect?.(optionToSelect)
       }
 
       if (event.key === 'Escape') {
-        setIsOpen(false);
+        setIsOpen(false)
       }
     },
-    [isOpen, items, onSelect],
-  );
+    [isOpen, items, onSelect]
+  )
 
   const handleSelectItem = useCallback(
     (item: AutocompleteItem<TValue>) => {
-      onChange?.(item.label);
-      onSelect?.(item);
-      setIsOpen(false);
+      onChange?.(item.label)
+      onSelect?.(item)
+      setIsOpen(false)
     },
-    [onChange, onSelect],
-  );
-  const isItemListOpen = isOpen && items.length > 0;
+    [onChange, onSelect]
+  )
+  const isItemListOpen = isOpen && items.length > 0
   return (
     <CommandPrimitive
       filter={(_, search, keywords) => {
         if (!keywords) {
-          return 0;
+          return 0
         }
 
-        return keywords.some((keyword) => keyword.toLowerCase().includes(search.toLowerCase()))
+        return keywords.some((keyword) =>
+          keyword.toLowerCase().includes(search.toLowerCase())
+        )
           ? 1
-          : 0;
+          : 0
       }}
       className="size-full rounded-md bg-popover text-popover-foreground"
       onKeyDown={(event) => handleKeyDown(event, value)}
@@ -113,7 +121,7 @@ function AutocompleteInner<TValue extends any>(
         className={cn(
           'flex h-10 items-center border-input px-3 py-2 text-sm',
           isItemListOpen ? 'border rounded-t-md' : 'border rounded-md ',
-          className,
+          className
         )}
         cmdk-input-wrapper=""
       >
@@ -124,11 +132,11 @@ function AutocompleteInner<TValue extends any>(
           onValueChange={onChange}
           {...props}
           onBlur={(event) => {
-            setIsOpen(() => false);
-            onBlur?.(event);
+            setIsOpen(() => false)
+            onBlur?.(event)
           }}
           onFocus={(event) => {
-            setIsOpen(() => true);
+            setIsOpen(() => true)
           }}
           className="flex w-full bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
         />
@@ -137,36 +145,51 @@ function AutocompleteInner<TValue extends any>(
         <div
           className={cn(
             'absolute top-0 z-50 w-full rounded-b-md border-input bg-popover text-popover-foreground shadow-md',
-            isItemListOpen && 'border-x border-b',
+            isItemListOpen && 'border-x border-b'
           )}
         >
           <CommandList>
             {isItemListOpen && (
               <>
-                <CommandEmpty>{emptyMessage ?? '結果がありません'}</CommandEmpty>
+                <CommandEmpty>
+                  {emptyMessage ?? '結果がありません'}
+                </CommandEmpty>
                 <CommandGroup>
                   {items.map((item, index) => {
-                    const isSelected = getSelectedItem?.(item, value ?? '', index) ?? false;
-                    const { className, onMouseDown, keywords, onSelect, ...itemProps } =
-                      getItemProps?.(item, value ?? '', index) ?? {};
+                    const isSelected =
+                      getSelectedItem?.(item, value ?? '', index) ?? false
+                    const {
+                      className,
+                      onMouseDown,
+                      keywords,
+                      onSelect,
+                      ...itemProps
+                    } = getItemProps?.(item, value ?? '', index) ?? {}
                     return (
                       <CommandItem
                         key={item.id}
                         value={item.id}
                         keywords={[item.label, ...(keywords ?? [])]}
                         onMouseDown={(event) => {
-                          event.preventDefault();
-                          event.stopPropagation();
-                          onMouseDown?.(event);
+                          event.preventDefault()
+                          event.stopPropagation()
+                          onMouseDown?.(event)
                         }}
                         onSelect={(value) => {
-                          handleSelectItem(item);
-                          onSelect?.(value);
+                          handleSelectItem(item)
+                          onSelect?.(value)
                         }}
-                        className={cn(['flex w-full items-center gap-2', className])}
+                        className={cn([
+                          'flex w-full items-center gap-2',
+                          className,
+                        ])}
                         {...itemProps}
                       >
-                        {isSelected ? <CheckIcon className="w-4" /> : <div></div>}
+                        {isSelected ? (
+                          <CheckIcon className="w-4" />
+                        ) : (
+                          <div></div>
+                        )}
                         <div className="flex w-full items-center justify-between">
                           <span>{item.label}</span>
                           <span className="text-xs tracking-widest text-muted-foreground">
@@ -174,7 +197,7 @@ function AutocompleteInner<TValue extends any>(
                           </span>
                         </div>
                       </CommandItem>
-                    );
+                    )
                   })}
                 </CommandGroup>
               </>
@@ -183,14 +206,14 @@ function AutocompleteInner<TValue extends any>(
         </div>
       </div>
     </CommandPrimitive>
-  );
+  )
 }
 
 const Autocomplete = forwardRef(AutocompleteInner) as <TValue>(
   props: AutocompleteProps<TValue> & {
-    ref?: ForwardedRef<typeof CommandPrimitive.Input>;
-  },
-) => ReturnType<typeof AutocompleteInner>;
+    ref?: ForwardedRef<typeof CommandPrimitive.Input>
+  }
+) => ReturnType<typeof AutocompleteInner>
 // Autocomplete.displayName = 'Autocomplete';
 
-export { Autocomplete };
+export { Autocomplete }

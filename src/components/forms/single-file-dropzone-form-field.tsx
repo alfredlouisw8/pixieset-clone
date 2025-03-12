@@ -1,8 +1,17 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef, useCallback } from 'react';
-import { FileWithPath, useDropzone } from 'react-dropzone';
-import { FieldPath, FieldValues, PathValue, useFormContext } from 'react-hook-form';
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  useCallback,
+} from 'react'
+import { FileWithPath, useDropzone } from 'react-dropzone'
+import {
+  FieldPath,
+  FieldValues,
+  PathValue,
+  useFormContext,
+} from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -10,8 +19,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 export type SingleFileDropzoneFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -20,14 +29,14 @@ export type SingleFileDropzoneFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'multiple' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-  onDropFiles?: (files: FileWithPath[]) => void;
-  onDropzoneFileDialogCancel?: () => void;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+  onDropFiles?: (files: FileWithPath[]) => void
+  onDropzoneFileDialogCancel?: () => void
+}
 
 export function SingleFileDropzoneFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -47,32 +56,32 @@ export function SingleFileDropzoneFormField<
   className,
   ...props
 }: SingleFileDropzoneFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       ctx.setValue(name, acceptedFiles[0] as PathValue<TFieldValues, TName>, {
         shouldDirty: true,
         shouldTouch: true,
         shouldValidate: true,
-      });
-      onDropFiles?.(acceptedFiles);
+      })
+      onDropFiles?.(acceptedFiles)
     },
-    [ctx, name, onDropFiles],
-  );
+    [ctx, name, onDropFiles]
+  )
   const onFileDialogCancel = useCallback(() => {
-    ctx.reset();
-    onDropzoneFileDialogCancel?.();
-  }, [ctx, onDropzoneFileDialogCancel]);
+    ctx.reset()
+    onDropzoneFileDialogCancel?.()
+  }, [ctx, onDropzoneFileDialogCancel])
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
     onDrop,
     onFileDialogCancel,
-  });
+  })
   const files = acceptedFiles.map((file) => (
     <span key={file.name}>
       {file.name} - {file.size} bytes
     </span>
-  ));
+  ))
 
   return (
     <FormField
@@ -94,7 +103,9 @@ export function SingleFileDropzoneFormField<
               >
                 <input {...getInputProps()} accept={props.accept} />
                 {files.length === 0 && (
-                  <div className="text-xs">ドラッグ&ドロップ、またはファイルを選択</div>
+                  <div className="text-xs">
+                    ドラッグ&ドロップ、またはファイルを選択
+                  </div>
                 )}
                 {files.length > 0 && (
                   <div className="w-full text-xs">
@@ -107,8 +118,8 @@ export function SingleFileDropzoneFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 export type NumberFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -20,12 +20,12 @@ export type NumberFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function NumberFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -41,7 +41,7 @@ export function NumberFormField<
   className,
   ...props
 }: NumberFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -61,12 +61,12 @@ export function NumberFormField<
                 disabled={formState.isSubmitting || disabled}
                 {...props}
                 onChange={(event) => {
-                  onChange(event.target.value);
-                  onChangeFieldValue?.(event);
+                  onChange(event.target.value)
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
                 {...field}
               />
@@ -74,8 +74,8 @@ export function NumberFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

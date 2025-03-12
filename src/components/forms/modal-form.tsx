@@ -1,17 +1,23 @@
-import React, { FormEvent, PropsWithChildren } from 'react';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import React, { FormEvent, PropsWithChildren } from 'react'
+import { FieldValues, UseFormReturn } from 'react-hook-form'
 
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Form } from '@/components/ui/form'
 
-export interface ModalFormProps<T extends FieldValues> extends PropsWithChildren {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  form: UseFormReturn<T>;
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-  submitButtonLabel: string;
+export interface ModalFormProps<T extends FieldValues>
+  extends PropsWithChildren {
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  form: UseFormReturn<T>
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>
+  submitButtonLabel: string
 }
 
 export function ModalForm<T extends FieldValues>({
@@ -42,5 +48,5 @@ export function ModalForm<T extends FieldValues>({
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

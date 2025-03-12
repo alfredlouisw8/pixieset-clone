@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -9,17 +9,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 function formatCurrency(value: string | null) {
   if (value == null) {
-    return '';
+    return ''
   }
   return value
     .replace(/,/g, '') // カンマの削除
-    .replace(/(?<!\.\d*?)(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // 小数部以外を3桁カンマ区切りにする
+    .replace(/(?<!\.\d*?)(\d)(?=(\d{3})+(?!\d))/g, '$1,') // 小数部以外を3桁カンマ区切りにする
 }
 
 export type CurrencyFormFieldProps<
@@ -29,13 +29,13 @@ export type CurrencyFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  placeholder?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  placeholder?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function CurrencyFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -52,13 +52,17 @@ export function CurrencyFormField<
   className,
   ...props
 }: CurrencyFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
 
   return (
     <FormField
       name={name}
       control={ctx.control}
-      render={({ field: { value: fieldValue, ...field }, formState, fieldState }) => {
+      render={({
+        field: { value: fieldValue, ...field },
+        formState,
+        fieldState,
+      }) => {
         return (
           <FormItem>
             {label && (
@@ -76,21 +80,21 @@ export function CurrencyFormField<
                 {...props}
                 value={formatCurrency(fieldValue)}
                 onChange={(event) => {
-                  const amount = formatCurrency(event.target.value);
-                  field.onChange(amount.replaceAll(',', ''));
-                  onChangeFieldValue?.(event);
+                  const amount = formatCurrency(event.target.value)
+                  field.onChange(amount.replaceAll(',', ''))
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
               />
             </FormControl>
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

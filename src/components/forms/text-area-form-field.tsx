@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -9,20 +9,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 export type TextAreaFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<ComponentPropsWithoutRef<typeof Textarea>, 'name' | 'value' | 'onChange' | 'onBlur'> & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLTextAreaElement>;
-};
+> = Omit<
+  ComponentPropsWithoutRef<typeof Textarea>,
+  'name' | 'value' | 'onChange' | 'onBlur'
+> & {
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLTextAreaElement>
+}
 
 export function TextAreaFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -38,7 +41,7 @@ export function TextAreaFormField<
   className,
   ...props
 }: TextAreaFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
 
   return (
     <FormField
@@ -58,12 +61,12 @@ export function TextAreaFormField<
                 disabled={formState.isSubmitting || disabled}
                 {...props}
                 onChange={(event) => {
-                  onChange(event.target.value);
-                  onChangeFieldValue?.(event);
+                  onChange(event.target.value)
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
                 {...field}
               />
@@ -71,8 +74,8 @@ export function TextAreaFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

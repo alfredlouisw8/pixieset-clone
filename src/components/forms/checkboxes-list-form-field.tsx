@@ -1,9 +1,9 @@
-import { CheckedState } from '@radix-ui/react-checkbox';
-import React, { ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { CheckedState } from '@radix-ui/react-checkbox'
+import React, { ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
-import { Checkbox } from '@/components/ui/checkbox';
+import OptionalLabel from '@/components/forms/optional-label'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   FormControl,
   FormDescription,
@@ -11,25 +11,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
 
-export type CheckBoxItem<TValue> = { label: string; value: TValue };
+export type CheckBoxItem<TValue> = { label: string; value: TValue }
 
-export type GetItemValueCallback<TValue> = (item: CheckBoxItem<TValue>, index: number) => string;
+export type GetItemValueCallback<TValue> = (
+  item: CheckBoxItem<TValue>,
+  index: number
+) => string
 
 export type CheckboxesListFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
   TValue extends any = string,
-> = Omit<ComponentPropsWithoutRef<typeof Checkbox>, 'name' | 'value' | 'onChange' | 'onBlur'> & {
-  name: TName;
-  label?: string;
-  description?: string;
-  items: CheckBoxItem<TValue>[];
-  getItemValue?: GetItemValueCallback<TValue>;
-  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void;
-};
+> = Omit<
+  ComponentPropsWithoutRef<typeof Checkbox>,
+  'name' | 'value' | 'onChange' | 'onBlur'
+> & {
+  name: TName
+  label?: string
+  description?: string
+  items: CheckBoxItem<TValue>[]
+  getItemValue?: GetItemValueCallback<TValue>
+  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void
+}
 
 export function CheckboxesListFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -46,7 +52,7 @@ export function CheckboxesListFormField<
   getItemValue,
   ...props
 }: CheckboxesListFormFieldProps<TFieldValues, TName, TValue>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -61,7 +67,8 @@ export function CheckboxesListFormField<
               </Label>
             )}
             {items.map((item, index) => {
-              const checkboxItemValue = getItemValue?.(item, index) ?? `${item.value}`;
+              const checkboxItemValue =
+                getItemValue?.(item, index) ?? `${item.value}`
               return (
                 <FormField
                   key={checkboxItemValue}
@@ -77,23 +84,29 @@ export function CheckboxesListFormField<
                           onCheckedChange={(checked) => {
                             checked
                               ? field.onChange([...value, checkboxItemValue])
-                              : field.onChange(value?.filter((v: any) => v !== checkboxItemValue));
-                            onChangeFieldValue?.(item.value, checked);
+                              : field.onChange(
+                                  value?.filter(
+                                    (v: any) => v !== checkboxItemValue
+                                  )
+                                )
+                            onChangeFieldValue?.(item.value, checked)
                           }}
                           {...field}
                         />
                       </FormControl>
-                      <FormLabel className="font-normal">{item.label}</FormLabel>
+                      <FormLabel className="font-normal">
+                        {item.label}
+                      </FormLabel>
                     </FormItem>
                   )}
                 ></FormField>
-              );
+              )
             })}
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

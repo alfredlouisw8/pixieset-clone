@@ -1,8 +1,13 @@
-import React, { ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldPathValue, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ComponentPropsWithoutRef } from 'react'
+import {
+  FieldPath,
+  FieldPathValue,
+  FieldValues,
+  useFormContext,
+} from 'react-hook-form'
 
-import { Autocomplete, AutocompleteItem } from '@/components/forms/autocomplete';
-import OptionalLabel from '@/components/forms/optional-label';
+import { Autocomplete, AutocompleteItem } from '@/components/forms/autocomplete'
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -10,8 +15,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { cn } from '@/lib/utils'
 
 export type AutocompleteFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -21,17 +26,20 @@ export type AutocompleteFormFieldProps<
   ComponentPropsWithoutRef<typeof Autocomplete<TValue>>,
   'name' | 'value' | 'onChange' | 'onSelect' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: (item: AutocompleteItem<TValue> | null) => void;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: (item: AutocompleteItem<TValue> | null) => void
+}
 
 export function AutocompleteFormField<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<TFieldValues, TName>,
+  TValue extends FieldPathValue<TFieldValues, TName> = FieldPathValue<
+    TFieldValues,
+    TName
+  >,
 >({
   name,
   label,
@@ -43,7 +51,7 @@ export function AutocompleteFormField<
   className,
   ...props
 }: AutocompleteFormFieldProps<TFieldValues, TName, TValue>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
 
   return (
     <FormField
@@ -63,15 +71,15 @@ export function AutocompleteFormField<
                 disabled={formState.isSubmitting || disabled}
                 {...props}
                 onChange={(value) => {
-                  onChange(value);
+                  onChange(value)
                   if (value !== field.value) {
-                    onChangeFieldValue?.(null);
+                    onChangeFieldValue?.(null)
                   }
                 }}
                 onSelect={onChangeFieldValue}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
                 {...field}
               />
@@ -79,8 +87,8 @@ export function AutocompleteFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

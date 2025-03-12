@@ -1,7 +1,7 @@
-import { CheckIcon } from 'lucide-react';
-import React, { useState } from 'react';
+import { CheckIcon } from 'lucide-react'
+import React, { useState } from 'react'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
@@ -9,14 +9,14 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/command'
+import { cn } from '@/lib/utils'
 
 export interface ComboboxProps<TValue> {
-  items: { id: string; label: string; additional?: string; value: TValue }[];
-  onChangeFieldValue?: (value: TValue) => void;
-  onClickNewValue?: (value: string) => void;
-  selectedItem?: TValue | null;
+  items: { id: string; label: string; additional?: string; value: TValue }[]
+  onChangeFieldValue?: (value: TValue) => void
+  onClickNewValue?: (value: string) => void
+  selectedItem?: TValue | null
 }
 
 export function Combobox<TValue>({
@@ -25,18 +25,24 @@ export function Combobox<TValue>({
   onClickNewValue,
   selectedItem,
 }: ComboboxProps<TValue>) {
-  const [value, setValue] = useState('');
-  const [selectedValue, setSelectedValue] = useState<TValue | null>(selectedItem ?? null);
+  const [value, setValue] = useState('')
+  const [selectedValue, setSelectedValue] = useState<TValue | null>(
+    selectedItem ?? null
+  )
   return (
     <Command>
-      <CommandInput onValueChange={(event) => setValue(event)} value={value} placeholder="検索" />
+      <CommandInput
+        onValueChange={(event) => setValue(event)}
+        value={value}
+        placeholder="検索"
+      />
       <CommandList>
         <CommandEmpty className="p-1 text-left">
           {onClickNewValue ? (
             <Button
               onClick={() => {
-                onClickNewValue?.(value);
-                setValue('');
+                onClickNewValue?.(value)
+                setValue('')
               }}
               variant="ghost"
               className="h-8 w-full bg-accent py-2 text-left"
@@ -54,14 +60,14 @@ export function Combobox<TValue>({
                 key={item.id}
                 value={item.label}
                 onSelect={() => {
-                  onChangeFieldValue?.(item.value);
-                  setSelectedValue(item.value);
+                  onChangeFieldValue?.(item.value)
+                  setSelectedValue(item.value)
                 }}
               >
                 <CheckIcon
                   className={cn(
                     'ml-auto h-4 w-4',
-                    selectedValue === item.value ? 'opacity-100' : 'opacity-0',
+                    selectedValue === item.value ? 'opacity-100' : 'opacity-0'
                   )}
                 />
                 <div className="flex w-full items-center justify-between">
@@ -76,5 +82,5 @@ export function Combobox<TValue>({
         )}
       </CommandList>
     </Command>
-  );
+  )
 }

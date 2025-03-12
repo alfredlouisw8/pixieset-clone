@@ -1,5 +1,5 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
 import {
   FormControl,
@@ -8,11 +8,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
-import RequiredLabel from './required-label';
+import RequiredLabel from './required-label'
 
 export type TextFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -21,12 +21,12 @@ export type TextFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function TextFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -42,7 +42,7 @@ export function TextFormField<
   className,
   ...props
 }: TextFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -62,12 +62,12 @@ export function TextFormField<
                 disabled={formState.isSubmitting || disabled}
                 {...props}
                 onChange={(event) => {
-                  onChange(event.target.value);
-                  onChangeFieldValue?.(event);
+                  onChange(event.target.value)
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
                 {...field}
               />
@@ -75,8 +75,8 @@ export function TextFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

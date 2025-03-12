@@ -1,6 +1,6 @@
-import { CheckedState } from '@radix-ui/react-checkbox';
-import { ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { CheckedState } from '@radix-ui/react-checkbox'
+import { ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
 import {
   DropdownMenu,
@@ -9,20 +9,23 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu'
 import {
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
-export type CheckBoxItem<TValue> = { label: string; value: TValue };
+export type CheckBoxItem<TValue> = { label: string; value: TValue }
 
-export type GetItemValueCallback<TValue> = (item: CheckBoxItem<TValue>, index: number) => string;
+export type GetItemValueCallback<TValue> = (
+  item: CheckBoxItem<TValue>,
+  index: number
+) => string
 
 export type CheckboxesDropdownFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -30,15 +33,21 @@ export type CheckboxesDropdownFormFieldProps<
   TValue extends any = string,
 > = Omit<
   ComponentPropsWithoutRef<typeof DropdownMenuCheckboxItem>,
-  'name' | 'value' | 'checked' | 'onChange' | 'onBlur' | 'onCheckedChange' | 'className'
+  | 'name'
+  | 'value'
+  | 'checked'
+  | 'onChange'
+  | 'onBlur'
+  | 'onCheckedChange'
+  | 'className'
 > &
   Pick<ComponentPropsWithoutRef<typeof Input>, 'className'> & {
-    name: TName;
-    label?: string;
-    description?: string;
-    items: CheckBoxItem<TValue>[];
-    onChangeFieldValue?: (value: TValue, checked: CheckedState) => void;
-  };
+    name: TName
+    label?: string
+    description?: string
+    items: CheckBoxItem<TValue>[]
+    onChangeFieldValue?: (value: TValue, checked: CheckedState) => void
+  }
 
 export function CheckboxesDropdownMenuFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -53,7 +62,7 @@ export function CheckboxesDropdownMenuFormField<
   className,
   ...props
 }: CheckboxesDropdownFormFieldProps<TFieldValues, TName, TValue>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -61,7 +70,11 @@ export function CheckboxesDropdownMenuFormField<
       render={({ field, fieldState, formState }) => {
         return (
           <FormItem>
-            {label && <Label className={fieldState.error && 'text-destructive'}>{label}</Label>}
+            {label && (
+              <Label className={fieldState.error && 'text-destructive'}>
+                {label}
+              </Label>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Input
@@ -96,10 +109,10 @@ export function CheckboxesDropdownMenuFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }
 
 export type CheckboxesDropdownMenuItemFormFieldProps<
@@ -110,12 +123,12 @@ export type CheckboxesDropdownMenuItemFormFieldProps<
   ComponentPropsWithoutRef<typeof DropdownMenuCheckboxItem>,
   'checked' | 'onChange' | 'onBlur' | 'onCheckedChange'
 > & {
-  name: TName;
-  index: number;
-  item: CheckBoxItem<TValue>;
-  getItemValue?: GetItemValueCallback<TValue>;
-  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void;
-};
+  name: TName
+  index: number
+  item: CheckBoxItem<TValue>
+  getItemValue?: GetItemValueCallback<TValue>
+  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void
+}
 
 export function CheckboxesDropdownMenuItemFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -132,8 +145,8 @@ export function CheckboxesDropdownMenuItemFormField<
   onSelect,
   ...props
 }: CheckboxesDropdownMenuItemFormFieldProps<TFieldValues, TName, TValue>) {
-  const ctx = useFormContext<TFieldValues>();
-  const checkboxItemValue = getItemValue?.(item, index) ?? `${item.value}`;
+  const ctx = useFormContext<TFieldValues>()
+  const checkboxItemValue = getItemValue?.(item, index) ?? `${item.value}`
   return (
     <FormField
       name={name}
@@ -148,8 +161,10 @@ export function CheckboxesDropdownMenuItemFormField<
               onCheckedChange={(checked) => {
                 checked
                   ? field.onChange([...value, checkboxItemValue])
-                  : field.onChange(value?.filter((v: any) => v !== checkboxItemValue));
-                onChangeFieldValue?.(item.value, checked);
+                  : field.onChange(
+                      value?.filter((v: any) => v !== checkboxItemValue)
+                    )
+                onChangeFieldValue?.(item.value, checked)
               }}
               onSelect={(event) => event.preventDefault()}
               {...field}
@@ -160,5 +175,5 @@ export function CheckboxesDropdownMenuItemFormField<
         </FormItem>
       )}
     />
-  );
+  )
 }

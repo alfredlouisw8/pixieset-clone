@@ -1,8 +1,8 @@
-import { SelectProps } from '@radix-ui/react-select';
-import React from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { SelectProps } from '@radix-ui/react-select'
+import React from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '@/components/ui/form'
 import {
   Select,
   SelectContent,
@@ -18,24 +18,24 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-} from '@/components/ui/select';
-import { colorNames, swatchColorPoint } from '@/constants';
-import { cn } from '@/lib/utils';
-import { makeBackgroundColorClassesFromName } from '@/utilities';
+} from '@/components/ui/select'
+import { colorNames, swatchColorPoint } from '@/constants'
+import { cn } from '@/lib/utils'
+import { makeBackgroundColorClassesFromName } from '@/utilities'
 
 export interface ColorSwatchFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends Omit<SelectProps, 'name' | 'value'> {
-  name: TName;
-  label?: string;
-  description?: string;
-  selectLabel?: string;
-  onChangeFieldValue?: (value: string) => void;
+  name: TName
+  label?: string
+  description?: string
+  selectLabel?: string
+  onChangeFieldValue?: (value: string) => void
 }
 
 interface ColorSwatchProps extends SelectProps {
-  selectLabel?: string;
+  selectLabel?: string
 }
 
 export function ColorSwatch({ selectLabel, ...props }: ColorSwatchProps) {
@@ -45,7 +45,7 @@ export function ColorSwatch({ selectLabel, ...props }: ColorSwatchProps) {
         <div
           className={cn(
             'text-2xl rounded-full w-4 h-4',
-            props.defaultValue && `bg-${props.defaultValue}-${swatchColorPoint}`,
+            props.defaultValue && `bg-${props.defaultValue}-${swatchColorPoint}`
           )}
         ></div>
       </SelectTrigger>
@@ -58,14 +58,14 @@ export function ColorSwatch({ selectLabel, ...props }: ColorSwatchProps) {
               value={colorName}
               className={cn(
                 ...makeBackgroundColorClassesFromName(colorName),
-                'my-1 h-8 rounded-none text-primary-foreground hover:text-primary-foreground focus:text-primary-foreground',
+                'my-1 h-8 rounded-none text-primary-foreground hover:text-primary-foreground focus:text-primary-foreground'
               )}
             ></SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>
     </Select>
-  );
+  )
 }
 
 export function ColorSwatchFormField<
@@ -81,7 +81,7 @@ export function ColorSwatchFormField<
   onChangeFieldValue,
   ...props
 }: ColorSwatchFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -103,16 +103,16 @@ export function ColorSwatchFormField<
                 defaultValue={field.value}
                 selectLabel={selectLabel}
                 onValueChange={(value) => {
-                  field.onChange(value);
-                  onChangeFieldValue?.(value);
+                  field.onChange(value)
+                  onChangeFieldValue?.(value)
                 }}
               />
             </FormControl>
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

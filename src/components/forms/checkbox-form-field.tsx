@@ -1,8 +1,8 @@
-import { CheckedState } from '@radix-ui/react-checkbox';
-import React, { ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { CheckedState } from '@radix-ui/react-checkbox'
+import React, { ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import { Checkbox } from '@/components/ui/checkbox';
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   FormControl,
   FormDescription,
@@ -10,23 +10,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '@/components/ui/form'
 
 export type CheckboxFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TValue extends ComponentPropsWithoutRef<typeof Checkbox>['value'] = ComponentPropsWithoutRef<
+  TValue extends ComponentPropsWithoutRef<
     typeof Checkbox
-  >['value'],
+  >['value'] = ComponentPropsWithoutRef<typeof Checkbox>['value'],
 > = Omit<
   ComponentPropsWithoutRef<typeof Checkbox>,
   'name' | 'checked' | 'onChange' | 'onCheckedChange' | 'children'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void;
-};
+  name: TName
+  label?: string
+  description?: string
+  onChangeFieldValue?: (value: TValue, checked: CheckedState) => void
+}
 
 export function CheckboxFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -39,7 +39,7 @@ export function CheckboxFormField<
   onChangeFieldValue,
   ...props
 }: CheckboxFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -53,8 +53,8 @@ export function CheckboxFormField<
                   disabled={formState.isSubmitting || disabled}
                   checked={value}
                   onCheckedChange={(checked) => {
-                    onChange(checked);
-                    onChangeFieldValue?.(value, checked);
+                    onChange(checked)
+                    onChangeFieldValue?.(value, checked)
                   }}
                   {...props}
                   {...field}
@@ -67,8 +67,8 @@ export function CheckboxFormField<
               <FormMessage />
             </div>
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

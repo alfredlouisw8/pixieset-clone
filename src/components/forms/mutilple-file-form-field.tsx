@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import React, { ChangeEventHandler, ComponentPropsWithoutRef } from 'react'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 export type MultipleFileFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -20,12 +20,12 @@ export type MultipleFileFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'multiple' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function MultipleFileFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -43,7 +43,7 @@ export function MultipleFileFormField<
   className,
   ...props
 }: MultipleFileFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   return (
     <FormField
       name={name}
@@ -65,12 +65,12 @@ export function MultipleFileFormField<
                 disabled={formState.isSubmitting || disabled}
                 placeholder={placeholder}
                 onChange={(event) => {
-                  field.onChange(Array.from(event.target.files || []));
-                  onChangeFieldValue?.(event);
+                  field.onChange(Array.from(event.target.files || []))
+                  onChangeFieldValue?.(event)
                 }}
                 className={cn(
                   hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                  className,
+                  className
                 )}
                 {...props}
               />
@@ -78,8 +78,8 @@ export function MultipleFileFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

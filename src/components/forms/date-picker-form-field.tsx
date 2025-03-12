@@ -1,12 +1,12 @@
-import { addYears, format, formatISO, parse, subYears } from 'date-fns';
-import { ja } from 'date-fns/locale';
-import { CalendarIcon } from 'lucide-react';
-import React from 'react';
-import { DateFormatter, DayPickerSingleProps } from 'react-day-picker';
-import { FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { addYears, format, formatISO, parse, subYears } from 'date-fns'
+import { ja } from 'date-fns/locale'
+import { CalendarIcon } from 'lucide-react'
+import React from 'react'
+import { DateFormatter, DayPickerSingleProps } from 'react-day-picker'
+import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
-import { Calendar } from '@/components/ui/calendar';
+import OptionalLabel from '@/components/forms/optional-label'
+import { Calendar } from '@/components/ui/calendar'
 import {
   FormControl,
   FormDescription,
@@ -14,30 +14,38 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { formatDate } from '@/data-format';
-import { cn } from '@/lib/utils';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { formatDate } from '@/data-format'
+import { cn } from '@/lib/utils'
 
 export type DatePickerFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<DayPickerSingleProps, 'mode' | 'selected' | 'onChange' | 'onSelect'> & {
-  name: TName;
-  label?: string;
-  placeholder?: string;
-  description?: string;
-  required?: boolean;
-  disabled?: boolean;
-  hasValueChangedFeedback?: boolean;
-  defaultSelection?: string;
-  minDate?: Date;
-  maxDate?: Date;
-  onChangeFieldValue?: (date?: Date) => void;
-};
+> = Omit<
+  DayPickerSingleProps,
+  'mode' | 'selected' | 'onChange' | 'onSelect'
+> & {
+  name: TName
+  label?: string
+  placeholder?: string
+  description?: string
+  required?: boolean
+  disabled?: boolean
+  hasValueChangedFeedback?: boolean
+  defaultSelection?: string
+  minDate?: Date
+  maxDate?: Date
+  onChangeFieldValue?: (date?: Date) => void
+}
 
-const formatCaption: DateFormatter = (date) => format(date, 'yoMo', { locale: ja });
+const formatCaption: DateFormatter = (date) =>
+  format(date, 'yoMo', { locale: ja })
 
 export function DatePickerFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -57,13 +65,17 @@ export function DatePickerFormField<
   className,
   ...props
 }: DatePickerFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
 
   return (
     <FormField
       name={name}
       control={ctx.control}
-      render={({ field: { value: fieldValue, onChange, ...field }, formState, fieldState }) => {
+      render={({
+        field: { value: fieldValue, onChange, ...field },
+        formState,
+        fieldState,
+      }) => {
         return (
           <FormItem>
             {label && (
@@ -82,26 +94,32 @@ export function DatePickerFormField<
                       placeholder={placeholder}
                       value={formatDate(fieldValue, { fallback: fieldValue })}
                       onChange={(event) => {
-                        onChange(event.target.value);
+                        onChange(event.target.value)
                       }}
                       onBlur={(event) => {
                         try {
-                          const date = parse(event.target.value, 'yyyy/MM/dd', new Date());
+                          const date = parse(
+                            event.target.value,
+                            'yyyy/MM/dd',
+                            new Date()
+                          )
                           onChange(
                             formatISO(new Date(date), {
                               representation: 'date',
-                            }),
-                          );
-                          onChangeFieldValue?.(date);
+                            })
+                          )
+                          onChangeFieldValue?.(date)
                         } catch (error) {
-                          onChange('');
+                          onChange('')
                         }
                       }}
                       disabled={disabled}
                       className={cn(
                         'w-full pl-10',
-                        hasValueChangedFeedback && fieldState.isDirty && 'bg-warning',
-                        className,
+                        hasValueChangedFeedback &&
+                          fieldState.isDirty &&
+                          'bg-warning',
+                        className
                       )}
                     />
                   </FormControl>
@@ -110,7 +128,7 @@ export function DatePickerFormField<
 
               <PopoverContent
                 onOpenAutoFocus={(event) => {
-                  event.preventDefault();
+                  event.preventDefault()
                 }}
                 className="w-auto p-0"
                 align="start"
@@ -121,7 +139,10 @@ export function DatePickerFormField<
                   disabled={
                     !formState.isSubmitting && disabled
                       ? disabled
-                      : (date) => formState.isSubmitting || date > maxDate || date < minDate
+                      : (date) =>
+                          formState.isSubmitting ||
+                          date > maxDate ||
+                          date < minDate
                   }
                   locale={ja}
                   formatters={{ formatCaption }}
@@ -129,10 +150,10 @@ export function DatePickerFormField<
                   selected={fieldValue}
                   onSelect={(day, selectDay, activeModifier, event) => {
                     if (day) {
-                      onChange(formatISO(day, { representation: 'date' }));
-                      onChangeFieldValue?.(day);
+                      onChange(formatISO(day, { representation: 'date' }))
+                      onChangeFieldValue?.(day)
                     } else {
-                      onChange('');
+                      onChange('')
                     }
                   }}
                 />
@@ -141,8 +162,8 @@ export function DatePickerFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }

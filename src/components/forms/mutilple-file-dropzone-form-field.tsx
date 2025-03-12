@@ -1,8 +1,17 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef, useCallback } from 'react';
-import { FileWithPath, useDropzone } from 'react-dropzone';
-import { FieldPath, FieldValues, PathValue, useFormContext } from 'react-hook-form';
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  useCallback,
+} from 'react'
+import { FileWithPath, useDropzone } from 'react-dropzone'
+import {
+  FieldPath,
+  FieldValues,
+  PathValue,
+  useFormContext,
+} from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label';
+import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -10,8 +19,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 export type MultipleFileDropzoneFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -20,12 +29,12 @@ export type MultipleFileDropzoneFormFieldProps<
   ComponentPropsWithoutRef<typeof Input>,
   'type' | 'name' | 'value' | 'multiple' | 'onChange' | 'onBlur'
 > & {
-  name: TName;
-  label?: string;
-  description?: string;
-  hasValueChangedFeedback?: boolean;
-  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>;
-};
+  name: TName
+  label?: string
+  description?: string
+  hasValueChangedFeedback?: boolean
+  onChangeFieldValue?: ChangeEventHandler<HTMLInputElement>
+}
 
 export function MultipleFileDropzoneFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -43,30 +52,30 @@ export function MultipleFileDropzoneFormField<
   className,
   ...props
 }: MultipleFileDropzoneFormFieldProps<TFieldValues, TName>) {
-  const ctx = useFormContext<TFieldValues>();
+  const ctx = useFormContext<TFieldValues>()
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       ctx.setValue(name, acceptedFiles as PathValue<TFieldValues, TName>, {
         shouldDirty: true,
         shouldTouch: true,
         shouldValidate: true,
-      });
+      })
     },
-    [ctx, name],
-  );
+    [ctx, name]
+  )
   const onFileDialogCancel = useCallback(() => {
-    ctx.reset();
-  }, [ctx]);
+    ctx.reset()
+  }, [ctx])
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop,
     onFileDialogCancel,
-  });
+  })
 
   const files = acceptedFiles.map((file) => (
     <li key={file.name}>
       {file.name} - {file.size} bytes
     </li>
-  ));
+  ))
 
   return (
     <FormField
@@ -88,7 +97,9 @@ export function MultipleFileDropzoneFormField<
                   className="flex h-20 items-center justify-center border-2 border-dotted hover:cursor-pointer"
                 >
                   <input {...getInputProps()} accept={props.accept} />
-                  <div className="text-xs">ドラッグ&ドロップ、またはファイルを選択</div>
+                  <div className="text-xs">
+                    ドラッグ&ドロップ、またはファイルを選択
+                  </div>
                 </div>
                 {files.length > 0 && (
                   <aside className="text-xs">
@@ -101,8 +112,8 @@ export function MultipleFileDropzoneFormField<
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );
+        )
       }}
     />
-  );
+  )
 }
