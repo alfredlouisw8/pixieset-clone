@@ -14,21 +14,21 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
-  name          String?
-  email         String?
-  username      String          @unique
-  emailVerified DateTime?
-  password      String
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?
+  username       String          @unique
+  emailVerified  DateTime?
+  password       String
+  image          String?
+  userMetadataId String          @db.ObjectId
+  accounts       Account[]
+  sessions       Session[]
+  Authenticator  Authenticator[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Category  Category[]
+  UserMetadata UserMetadata @relation(fields: [userMetadataId], references: [id])
 }
 
 model Account {
@@ -89,15 +89,39 @@ model Authenticator {
   @@unique([userId, credentialID])
 }
 
-model BaseCategory {
-  baseCategoryId String @id @default(auto()) @map("_id") @db.ObjectId
-  name           String
+model Category {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  galleryId String @db.ObjectId
+
+  Gallery      Gallery        @relation(fields: [galleryId], references: [id])
+  GalleryImage GalleryImage[]
 }
 
-model Category {
-  categoryId   String @id @default(auto()) @map("_id") @db.ObjectId
-  categoryName String
-  userId       String @db.ObjectId
+model UserMetadata {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  bannerImage String
+  whatsapp    String
+  instagram   String
+  aboutImage  String
+  aboutText   String
+  logo        String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User User[]
+}
+
+model Gallery {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  bannerImage String[]
+  title       String
+
+  Category Category[]
+}
+
+model GalleryImage {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl   String
+  categoryId String @db.ObjectId
+
+  Category Category @relation(fields: [categoryId], references: [id])
 }
