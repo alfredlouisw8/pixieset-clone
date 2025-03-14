@@ -29,6 +29,7 @@ model User {
   updatedAt      DateTime        @updatedAt
 
   UserMetadata UserMetadata @relation(fields: [userMetadataId], references: [id])
+  Gallery      Gallery[]
 }
 
 model Account {
@@ -89,13 +90,13 @@ model Authenticator {
   @@unique([userId, credentialID])
 }
 
-model Category {
+model GalleryCategory {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   galleryId String @db.ObjectId
 
-  Gallery      Gallery        @relation(fields: [galleryId], references: [id])
-  GalleryImage GalleryImage[]
+  Gallery              Gallery                @relation(fields: [galleryId], references: [id])
+  GalleryCategoryImage GalleryCategoryImage[]
 }
 
 model UserMetadata {
@@ -114,14 +115,19 @@ model Gallery {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   bannerImage String[]
   title       String
+  userId      String   @db.ObjectId
+  date        DateTime
+  isPublished Boolean
+  slug        String   @unique
 
-  Category Category[]
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  GalleryCategory GalleryCategory[]
 }
 
-model GalleryImage {
+model GalleryCategoryImage {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
   imageUrl   String
   categoryId String @db.ObjectId
 
-  Category Category @relation(fields: [categoryId], references: [id])
+  GalleryCategory GalleryCategory @relation(fields: [categoryId], references: [id])
 }
