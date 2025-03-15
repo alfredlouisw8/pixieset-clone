@@ -29,6 +29,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@tanstack/react-table": "^8.20.5",
     "@types/exceljs": "^1.3.0",
+    "bignumber.js": "9.1.2",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

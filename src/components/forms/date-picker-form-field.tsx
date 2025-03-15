@@ -5,7 +5,7 @@ import React from 'react'
 import { DateFormatter, DayPickerSingleProps } from 'react-day-picker'
 import { FieldPath, FieldValues, useFormContext } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label'
+import RequiredLabel from '@/components/forms/required-label'
 import { Calendar } from '@/components/ui/calendar'
 import {
   FormControl,
@@ -81,13 +81,13 @@ export function DatePickerFormField<
             {label && (
               <FormLabel>
                 {label}
-                {!required && <OptionalLabel className="ml-1" />}
+                {!required && <RequiredLabel className="ml-1" />}
               </FormLabel>
             )}
             <Popover>
               <div className="relative w-full">
                 <PopoverTrigger className="w-full">
-                  <CalendarIcon className="absolute left-0 top-1/2 mx-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                  <CalendarIcon className="text-muted-foreground absolute left-0 top-1/2 mx-3 size-4 -translate-y-1/2" />
                   <FormControl>
                     <Input
                       type="text"

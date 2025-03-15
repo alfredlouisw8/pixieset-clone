@@ -30,7 +30,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectContent,
-} from '@/components/ui/select' // Add select component from your UI library
+} from '@/components/ui/select' // Add select components from your UI library
 import { serviceTypeText } from '@/utils/functions'
 
 interface DataTableProps<TData extends { id: string }, TValue> {

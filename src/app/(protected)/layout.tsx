@@ -1,6 +1,7 @@
 import { CircleUser, Menu, Package2, Users } from 'lucide-react'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import React from 'react'
 
 import LogoutButton from '@/components/auth/logout-button'
 import { Button } from '@/components/ui/button'

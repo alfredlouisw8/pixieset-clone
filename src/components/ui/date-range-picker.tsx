@@ -33,7 +33,7 @@ export function DatePickerWithRange({
   // Handle date change internally and pass the new range to onChange
   const handleSelect = (range: DateRange | undefined) => {
     setDate(range)
-    onChange(range) // Pass the selected range to the parent component
+    onChange(range) // Pass the selected range to the parent components
   }
 
   return (

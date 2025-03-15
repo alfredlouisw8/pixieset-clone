@@ -9,8 +9,8 @@ export default function OptionalLabel({
   ...props
 }: OptionalLabelProps) {
   return (
-    <span className={cn('text-muted-foreground', className)} {...props}>
-      (任意)
+    <span className={cn('text-muted-foreground text-xs', className)} {...props}>
+      (optional)
     </span>
   )
 }

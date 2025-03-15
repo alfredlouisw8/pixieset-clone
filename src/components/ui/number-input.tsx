@@ -30,7 +30,7 @@ const NumberInput: React.FC<NumberInputWithSeparatorProps> = React.forwardRef(
               const cleanValue = e.target.value.replace(/,/g, '')
               onChange(parseInt(cleanValue)) // Send the numeric value to the form
             }}
-            // Additional properties for the Input component can be added here
+            // Additional properties for the Input components can be added here
           />
         )}
       />
