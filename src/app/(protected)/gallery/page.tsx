@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import GalleryList from '@/features/gallery/components/gallery-list'
 
 export default function GalleryPage() {
   return (
@@ -11,6 +12,7 @@ export default function GalleryPage() {
           <Link href="/gallery/create">Create</Link>
         </Button>
       </div>
+      <GalleryList />
     </div>
   )
 }
