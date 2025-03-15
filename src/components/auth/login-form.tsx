@@ -1,29 +1,23 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { signIn, signOut } from 'next-auth/react'
 import { toast } from '@/components/ui/use-toast'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { redirect, useRouter } from 'next/navigation'
 import { signInSchema } from '@/lib/auth/auth.config'
 
 export default function LoginForm() {
@@ -41,13 +35,16 @@ export default function LoginForm() {
     username,
     password,
   }: z.infer<typeof signInSchema>) {
+    console.log('Login form submitted')
     try {
       const signInResult = await signIn('credentials', {
         username,
         password,
-        callbackUrl: '/',
+        callbackUrl: '/dashboard',
         redirect: false, // Change this to false to handle redirection manually
       })
+
+      console.log('Sign in result:', signInResult)
 
       if (signInResult?.error) {
         // Show toast notification when there's an error
@@ -57,7 +54,7 @@ export default function LoginForm() {
         })
       } else if (signInResult?.ok) {
         // Redirect manually if login is successful
-        router.push('/')
+        router.push('/dashboard')
       }
     } catch (error) {
       // Catch any unexpected errors

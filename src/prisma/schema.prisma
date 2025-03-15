@@ -14,22 +14,21 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String?
-  username       String          @unique
-  emailVerified  DateTime?
-  password       String
-  image          String?
-  userMetadataId String          @db.ObjectId
-  accounts       Account[]
-  sessions       Session[]
-  Authenticator  Authenticator[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?
+  username      String          @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Authenticator Authenticator[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
-  UserMetadata UserMetadata @relation(fields: [userMetadataId], references: [id])
   Gallery      Gallery[]
+  UserMetadata UserMetadata?
 }
 
 model Account {
@@ -49,7 +48,9 @@ model Account {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userMetadata   UserMetadata? @relation(fields: [userMetadataId], references: [id], onDelete: Cascade)
+  userMetadataId String?       @unique @db.ObjectId // Ensure uniqueness
 
   @@unique([provider, providerAccountId])
 }
@@ -107,8 +108,10 @@ model UserMetadata {
   aboutImage  String
   aboutText   String
   logo        String
+  userId      String @unique @db.ObjectId // Ensure 1:1 relationship
 
-  User User[]
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Account Account?
 }
 
 model Gallery {

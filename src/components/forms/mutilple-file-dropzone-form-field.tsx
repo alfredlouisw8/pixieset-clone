@@ -97,13 +97,11 @@ export function MultipleFileDropzoneFormField<
                   className="flex h-20 items-center justify-center border-2 border-dotted hover:cursor-pointer"
                 >
                   <input {...getInputProps()} accept={props.accept} />
-                  <div className="text-xs">
-                    ドラッグ&ドロップ、またはファイルを選択
-                  </div>
+                  <div className="text-xs">Drag and drop or select a file</div>
                 </div>
                 {files.length > 0 && (
                   <aside className="text-xs">
-                    <h4>選択中のファイル {files.length} 件</h4>
+                    <h4>Selected files: {files.length} items</h4>
                     <ul className="max-h-40 overflow-auto">{files}</ul>
                   </aside>
                 )}

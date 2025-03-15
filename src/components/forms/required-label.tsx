@@ -9,8 +9,8 @@ export default function RequiredLabel({
   ...props
 }: RequiredLabelProps) {
   return (
-    <span className={cn('text-muted-foreground', className)} {...props}>
-      (必須)
+    <span className={cn('text-red-500', className)} {...props}>
+      *
     </span>
   )
 }
