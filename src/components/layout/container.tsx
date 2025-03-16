@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { Session } from 'next-auth'
 import { PropsWithChildren, Suspense } from 'react'
 
@@ -19,13 +20,15 @@ export default function Container({
   children,
   session,
 }: ContainerProps) {
+  const pathName = usePathname()
+  const isGalleryPage = /^\/gallery\/[\w-]+$/.test(pathName) // Matches "/gallery/{galleryId}"
   return (
     <div
       className={cn({
         'flex min-h-svh w-full': true,
       })}
     >
-      {sideBar && <AppSidebar />}
+      {!isGalleryPage && sideBar && <AppSidebar />}
       <div className="flex h-full min-w-0 grow flex-col">
         <TopNavigationBar
           header={header}

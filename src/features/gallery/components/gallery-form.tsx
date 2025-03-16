@@ -2,6 +2,7 @@
 
 import { Gallery } from '@prisma/client'
 import Image from 'next/image'
+import React from 'react'
 
 import { CheckboxFormField } from '@/components/forms/checkbox-form-field'
 import { DatePickerFormField } from '@/components/forms/date-picker-form-field'

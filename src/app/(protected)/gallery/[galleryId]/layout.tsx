@@ -1,5 +1,8 @@
+'use client'
+
 import { Package2, Users } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const galleryMenu = [
@@ -14,6 +17,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       icon: <Users className="size-4" />,
     },
   ]
+
+  const pathName = usePathname()
+  const isGalleryPage = /^\/gallery\/[\w-]+$/.test(pathName) // Matches "/gallery/{galleryId}"
+
+  if (!isGalleryPage) {
+    return <>{children}</>
+  }
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
