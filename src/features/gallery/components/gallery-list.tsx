@@ -27,7 +27,7 @@ export default async function GalleryList() {
           key={item.id}
           className="col-span-6 flex h-full flex-col gap-2 lg:col-span-4 xl:col-span-3 2xl:col-span-2"
         >
-          <div className="group relative h-48 w-full cursor-pointer">
+          <div className="group relative h-52 w-full cursor-pointer">
             <Image
               src={JSON.parse(item.bannerImage[0]).url}
               alt="Next.js logo"

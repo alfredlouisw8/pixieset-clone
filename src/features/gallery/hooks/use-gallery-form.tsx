@@ -73,9 +73,8 @@ export default function useGalleryForm({
       const formData = new FormData()
       files.forEach((file) => formData.append('images', file))
 
-      const uploadedUrls = await uploadToCloudinary(formData) // Call server action
-
-      return uploadedUrls
+      // Call server action
+      return await uploadToCloudinary(formData)
     } catch (error) {
       console.error('Cloudinary Upload Error:', error)
     }
