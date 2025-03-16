@@ -14,22 +14,22 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   if (!session?.user) {
     return {
-      error: 'Silahkan login',
+      error: 'Unauthorized',
     }
   }
 
   let result
 
-  const { title, bannerImage, userId, date, isPublished, slug } = data
+  const { title, bannerImage, date, isPublished, slug } = data
 
   try {
     result = await prisma.$transaction(async (prisma) => {
       const gallery = await prisma.gallery.create({
         data: {
           title,
-          bannerImage,
-          userId,
-          date,
+          bannerImage: bannerImage as string[],
+          userId: session.user.id,
+          date: new Date(date),
           isPublished,
           slug,
         },
@@ -40,7 +40,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   } catch (error: any) {
     console.error(error.message)
     return {
-      error: error.message || 'Gagal menambah barang',
+      error: 'Failed to create gallery',
     }
   }
 

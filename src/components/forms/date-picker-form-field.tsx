@@ -1,5 +1,5 @@
 import { addYears, format, formatISO, parse, subYears } from 'date-fns'
-import { ja } from 'date-fns/locale'
+import { enUS } from 'date-fns/locale'
 import { CalendarIcon } from 'lucide-react'
 import React from 'react'
 import { DateFormatter, DayPickerSingleProps } from 'react-day-picker'
@@ -45,7 +45,7 @@ export type DatePickerFieldProps<
 }
 
 const formatCaption: DateFormatter = (date) =>
-  format(date, 'yoMo', { locale: ja })
+  format(date, 'MMM yyyy', { locale: enUS })
 
 export function DatePickerFormField<
   TFieldValues extends FieldValues = FieldValues,
@@ -81,7 +81,7 @@ export function DatePickerFormField<
             {label && (
               <FormLabel>
                 {label}
-                {!required && <RequiredLabel className="ml-1" />}
+                {required && <RequiredLabel className="ml-1" />}
               </FormLabel>
             )}
             <Popover>
@@ -144,7 +144,7 @@ export function DatePickerFormField<
                           date > maxDate ||
                           date < minDate
                   }
-                  locale={ja}
+                  locale={enUS}
                   formatters={{ formatCaption }}
                   {...props}
                   selected={fieldValue}

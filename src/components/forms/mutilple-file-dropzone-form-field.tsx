@@ -11,7 +11,6 @@ import {
   useFormContext,
 } from 'react-hook-form'
 
-import OptionalLabel from '@/components/forms/optional-label'
 import {
   FormControl,
   FormDescription,
@@ -21,6 +20,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+
+import RequiredLabel from './required-label'
 
 export type MultipleFileDropzoneFormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -64,7 +65,7 @@ export function MultipleFileDropzoneFormField<
     [ctx, name]
   )
   const onFileDialogCancel = useCallback(() => {
-    ctx.reset()
+    // ctx.reset()
   }, [ctx])
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -87,7 +88,7 @@ export function MultipleFileDropzoneFormField<
             {label && (
               <FormLabel>
                 {label}
-                {!required && <OptionalLabel className="ml-1" />}
+                {required && <RequiredLabel className="ml-1" />}
               </FormLabel>
             )}
             <FormControl>
