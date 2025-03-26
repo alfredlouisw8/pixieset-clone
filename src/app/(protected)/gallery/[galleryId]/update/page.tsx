@@ -12,8 +12,10 @@ export default async function GalleryUpdatePage({
 
   return (
     <div className="flex max-w-lg flex-col gap-5">
-      <BackButton />
-      <h1 className="text-3xl font-bold">Update Gallery</h1>
+      <div className="flex gap-3">
+        <BackButton />
+        <h1 className="text-3xl font-bold">Update Gallery</h1>
+      </div>
 
       {gallery ? (
         <GalleryUpdateForm galleryData={gallery} />
